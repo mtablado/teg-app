@@ -1,0 +1,38 @@
+<ion-header>
+<ion-navbar>
+  <button ion-button menuToggle icon-only>
+    <ion-icon name='menu'></ion-icon>
+  </button>
+  <ion-title>
+  El Garabato TTES
+  </ion-title>
+    <!--ion-item end>
+      <ion-label>Compartir Ubicaci&oacute;n</ion-label>
+      <ion-checkbox color="green" checked="true" [(ngModel)]="shareLocation" [(ngChange)]="changeLocationSetting"></ion-checkbox>
+    </ion-item-->
+    <!--ion-buttons end>
+
+      <button ion-button (click)="showHome()"><ion-icon name="list"></ion-icon>Home</button>
+    </ion-buttons-->
+</ion-navbar>
+</ion-header>
+
+<ion-content padding class="bg-image">
+  <h2><p *ngIf="isUserRegistered() == true"> Bienvenido {{user.name}}</p></h2>
+
+
+  <ion-item>
+    <ion-label>Compartir Ubicación</ion-label>
+    <ion-toggle [(ngModel)]="shareLocation" (ngModelChange)="toggleShareLocation($event)"></ion-toggle>
+  </ion-item>
+
+  <div *ngIf="shareLocation">
+    <h3>Posici&oacute;n Actual</h3>
+    <h4>Latitud: {{locationTracker.lat}}</h4>
+    <h4>Longitud: {{locationTracker.lng}}</h4>
+  </div>
+  <!--button ion-button full primary (click)="start()">Activar Seguimiento</button>
+  <button ion-button full primary (click)="stop()">Parar seguimiento</button-->
+
+  <div #map id="map"></div>
+</ion-content>
