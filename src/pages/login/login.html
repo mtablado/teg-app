@@ -1,4 +1,4 @@
-<ion-header>
+<!--ion-header>
 <ion-navbar>
   <button ion-button menuToggle icon-only>
     <ion-icon name='menu'></ion-icon>
@@ -7,20 +7,60 @@
   Iniciar Sesión
   </ion-title>
 </ion-navbar>
-</ion-header>
+</ion-header-->
 
 <ion-content padding class="elgarabato">
+  <ion-grid>
+    <ion-row class="logo-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+        <img src="/assets/imgs/login/logo.png"/>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
 
-<form [formGroup]="loginFormGroup" (ngSubmit)="logForm()">
-  <ion-item>
-    <ion-label color="primary" stacked>Nombre de usuario</ion-label>
-    <ion-input type="text" formControlName="username"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label color="primary" stacked>Contraseña</ion-label>
-    <ion-input type="password" formControlName="password"></ion-input>
-  </ion-item>
-  <button ion-button type="submit" [disabled]="!loginFormGroup.valid">Submit</button>
-</form>
+    <form [formGroup]="loginFormGroup" (ngSubmit)="logForm()">
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col col-8>
+          <ion-item>
+            <ion-input type="text" formControlName="username" class="user" placeholder="USUARIO"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col col-8>
+          <ion-item>
+            <ion-input type="password" formControlName="password" class="pwd" placeholder="CONTRASEÑA"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+        </ion-col>
+        <ion-col col-8>
+          <button ion-button type="submit" [disabled]="!loginFormGroup.valid" class="login">ENTRAR</button>
+        </ion-col>
+        <ion-col>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </ion-grid>
+
+
+
+
 
 </ion-content>
