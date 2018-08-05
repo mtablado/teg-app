@@ -21,46 +21,47 @@
       </ion-col>
     </ion-row>
 
-    <form [formGroup]="loginFormGroup" (ngSubmit)="logForm()">
-      <ion-row>
-        <ion-col>
-        </ion-col>
-        <ion-col col-8>
-          <ion-item>
-            <ion-input type="text" formControlName="username" class="user" placeholder="USUARIO"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-        </ion-col>
-      </ion-row>
+    <ion-row>
 
-      <ion-row>
-        <ion-col>
-        </ion-col>
-        <ion-col col-8>
-          <ion-item>
-            <ion-input type="password" formControlName="password" class="pwd" placeholder="CONTRASEÑA"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-        </ion-col>
-      </ion-row>
+      <ion-grid>
+        <form [formGroup]="loginFormGroup" (ngSubmit)="logForm()">
+          <ion-row>
+            <ion-col>
+            </ion-col>
+            <ion-col col-8>
+              <ion-item>
+                <ion-input type="text" formControlName="username" class="user" placeholder="USUARIO"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
 
-      <ion-row>
-        <ion-col>
-        </ion-col>
-        <ion-col col-8>
-          <button ion-button type="submit" [disabled]="!loginFormGroup.valid" class="login">ENTRAR</button>
-        </ion-col>
-        <ion-col>
-        </ion-col>
-      </ion-row>
+          <ion-row>
+            <ion-col>
+            </ion-col>
+            <ion-col col-8>
+              <ion-item>
+                <ion-input type="password" formControlName="password" class="pwd" placeholder="CONTRASEÑA"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
 
-    </form>
+          <ion-row>
+            <ion-col>
+            </ion-col>
+            <ion-col col-8>
+              <button ion-button type="submit" [disabled]="!loginFormGroup.valid" class="login">ENTRAR</button>
+            </ion-col>
+            <ion-col>
+            </ion-col>
+          </ion-row>
+
+        </form>
+      </ion-grid>
+    </ion-row>
   </ion-grid>
-
-
-
-
 
 </ion-content>

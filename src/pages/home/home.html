@@ -1,4 +1,4 @@
-<ion-header>
+<!--ion-header>
 <ion-navbar>
   <button ion-button menuToggle icon-only>
     <ion-icon name='menu'></ion-icon>
@@ -6,33 +6,60 @@
   <ion-title>
   El Garabato TTES
   </ion-title>
-    <!--ion-item end>
-      <ion-label>Compartir Ubicaci&oacute;n</ion-label>
-      <ion-checkbox color="green" checked="true" [(ngModel)]="shareLocation" [(ngChange)]="changeLocationSetting"></ion-checkbox>
-    </ion-item-->
-    <!--ion-buttons end>
-
-      <button ion-button (click)="showHome()"><ion-icon name="list"></ion-icon>Home</button>
-    </ion-buttons-->
 </ion-navbar>
-</ion-header>
+</ion-header-->
 
-<ion-content padding class="bg-image">
+<ion-content padding class="elgarabato">
+  <ion-grid>
+    <ion-row class="logo-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+        <img src="/assets/imgs/home/logo.png"/>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="status-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8 class="status-row">
+
+        <div *ngIf="shareLocation">
+          <h3>Posici&oacute;n Actual</h3>
+          <h4>Latitud: {{locationTracker.lat}}</h4>
+          <h4>Longitud: {{locationTracker.lng}}</h4>
+        </div>
+
+        <div *ngIf="!shareLocation">
+          <h3>Por favor activa el seguimiento!</h3>
+        </div>
+
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="toggle-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+
+        <ion-item class="toggle-item">
+          <ion-toggle [(ngModel)]="shareLocation" (ngModelChange)="toggleShareLocation($event)" class="toggle-location"></ion-toggle>
+          <ion-label>Compartir Ubicación</ion-label>
+        </ion-item>
+
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
   <h2><p *ngIf="isUserRegistered() == true"> Bienvenido {{user.name}}</p></h2>
 
-
-  <ion-item>
-    <ion-label>Compartir Ubicación</ion-label>
-    <ion-toggle [(ngModel)]="shareLocation" (ngModelChange)="toggleShareLocation($event)"></ion-toggle>
-  </ion-item>
-
-  <div *ngIf="shareLocation">
-    <h3>Posici&oacute;n Actual</h3>
-    <h4>Latitud: {{locationTracker.lat}}</h4>
-    <h4>Longitud: {{locationTracker.lng}}</h4>
-  </div>
   <!--button ion-button full primary (click)="start()">Activar Seguimiento</button>
   <button ion-button full primary (click)="stop()">Parar seguimiento</button-->
 
-  <div #map id="map"></div>
 </ion-content>

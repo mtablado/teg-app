@@ -1,10 +1,16 @@
 page-login {
+
     .grid {
         padding-top: 30px;
+        height: 100%;
     }
 
     .logo-row {
-        padding-bottom: 150px;
+        height: 60%;
+    }
+
+    .form-row {
+        height: 40%;
     }
 
     .scroll {

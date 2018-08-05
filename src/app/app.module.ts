@@ -13,6 +13,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 import { httpInterceptorProviders } from '../providers/http/interceptors-index';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
@@ -28,7 +29,8 @@ import { SecurityContext } from '../providers/oauth/security-context';
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    WelcomePage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { SecurityContext } from '../providers/oauth/security-context';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    WelcomePage
   ],
   providers: [
     BackgroundMode,
