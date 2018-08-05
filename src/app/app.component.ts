@@ -4,7 +4,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SecurityContext } from '../providers/oauth/security-context';
 import { User } from '../providers/db/user-entity';
@@ -14,11 +13,8 @@ import { User } from '../providers/db/user-entity';
 })
 export class MyApp {
 
-  // TODO Change after design tasks.
   rootPage:any = WelcomePage;
-  // rootPage:any = LoginPage;
   homePage = HomePage;
-  loginPage = LoginPage;
   welcomePage = WelcomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
@@ -29,19 +25,17 @@ export class MyApp {
 
       statusBar.styleDefault();
 
-      // Show the login page if the user cannot be restored from database.
-      // TODO Comment this out after design tasks
-      // this.securityContext.getUser()
-      //   .subscribe((user: User) => {
-      //     if (user.name) {
-      //       this.rootPage = this.homePage;
-      //     } else {
-      //       this.rootPage = this.loginPage;
-      //     }
-      //   });
+      // Show the welcome page if the user cannot be restored from database.
+      this.securityContext.getUser()
+        .subscribe((user: User) => {
+          if (user.name) {
+            this.rootPage = this.homePage;
+          } else {
+            this.rootPage = this.welcomePage;
+          }
+        });
 
       splashScreen.hide();
-
 
     });
   }

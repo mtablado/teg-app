@@ -83,6 +83,12 @@
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
+    <allow-navigation href="http://192.168.1.45:8100" />
+    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
+    <plugin name="cordova-sqlite-storage" spec="^2.3.2" />
+    <engine name="android" spec="^7.0.0" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.3.5">
         <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
         <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
@@ -93,10 +99,4 @@
         <variable name="ACCOUNT_TYPE" value="$PACKAGE_NAME.account" />
         <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
     </plugin>
-    <allow-navigation href="http://192.168.1.45:8100" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
-    <plugin name="cordova-sqlite-storage" spec="^2.3.2" />
-    <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
-    <engine name="android" spec="^7.0.0" />
-    <plugin name="cordova-plugin-device" spec="^2.0.2" />
 </widget>

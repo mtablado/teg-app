@@ -33,7 +33,7 @@
         </div>
 
         <div *ngIf="!shareLocation">
-          <h3>Por favor activa el seguimiento!</h3>
+          <h3>{{user.name}} Por favor activa el seguimiento!</h3>
         </div>
 
       </ion-col>
@@ -57,7 +57,7 @@
     </ion-row>
 
   </ion-grid>
-  <h2><p *ngIf="isUserRegistered() == true"> Bienvenido {{user.name}}</p></h2>
+  <!--h2><p *ngIf="isUserRegistered() == true"> Bienvenido {{user.name}}</p></h2-->
 
   <!--button ion-button full primary (click)="start()">Activar Seguimiento</button>
   <button ion-button full primary (click)="stop()">Parar seguimiento</button-->
