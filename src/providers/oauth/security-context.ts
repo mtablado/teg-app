@@ -5,7 +5,7 @@ import { retry } from 'rxjs/operators';
 
 import { UserRepository } from '../db/user-repository';
 import { User } from '../db/user-entity';
-import { OAuthProvider } from './oauth';
+import { OAuthProvider, OAuthToken } from './oauth';
 
 @Injectable()
 export class SecurityContext {
@@ -82,7 +82,7 @@ export class SecurityContext {
   }
 
   public getUser(): Observable<User> {
-    const simpleObservable = new Observable((observer) => {
+    const simpleObservable = new Observable<User>((observer) => {
 
       if (this.user) {
         observer.next(this.user);
@@ -98,7 +98,7 @@ export class SecurityContext {
                 observer.complete();
               })
               .catch(e => {console.log('Error: ' + JSON.stringify(e))});
-          });
+          }).catch(e => {console.log('Error: ' + JSON.stringify(e))});
       }
 
     });

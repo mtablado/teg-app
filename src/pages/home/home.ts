@@ -32,7 +32,7 @@ export class HomePage {
 
     this.shareLocation = false;
     this.user = new User();
-    this.getUser();
+    //this.getUser();
     this.backgroundMode.setDefaults({ silent: true });
     // Override the back button on Android to go to background instead of closing the app.
     this.backgroundMode.overrideBackButton();

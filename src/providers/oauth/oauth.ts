@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { DatabaseService } from '../db/database-service';
 import { OAuthRepository } from '../db/oauth-repository';
 import { OAuthEntity } from '../db/oauth-entity';
 
@@ -49,7 +48,6 @@ export class OAuthProvider {
 
   constructor(
       private http: HttpClient
-      , private db: DatabaseService
       , private oauthRepository: OAuthRepository) {
     console.log('Hello OauthProvider Provider');
     this.registeredUser = null;
@@ -59,9 +57,9 @@ export class OAuthProvider {
     return this.oauthToken.access_token;
   }
 
-  public findToken(): OAuthToken {
+  public findToken(): Promise<OAuthToken> {
 
-    var promise = new Promise((resolve, reject) => {
+    var promise = new Promise<OAuthToken>((resolve, reject) => {
       this.oauthRepository.findToken()
         .then((oauthEntity: OAuthEntity) => {
           this.oauthToken = new OAuthToken();
@@ -150,16 +148,6 @@ export class OAuthProvider {
     });
     return promise;
 
-  }
-
-  private headers(token: string) {
-    console.log('Creating headers with auth: ' + token);
-    let headers = new HttpHeaders({
-      'Content-Type':  'application/json',
-      'Authorization': 'Bearer ' + token
-    });
-    console.log('headers: ' + headers.get('Authorization'));
-    return headers;
   }
 
   private loginSuccess(username: string, data: OAuthToken) {

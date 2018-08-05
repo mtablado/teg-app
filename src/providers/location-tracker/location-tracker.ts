@@ -3,6 +3,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import 'rxjs/add/operator/filter';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
 
 import { LocationRepository } from '../db/location-repository';
@@ -69,7 +70,7 @@ export class LocationTrackerProvider {
 
   }
 
-  postPosition(pos: Position): Observable<void> {
+  postPosition(pos: Position): Observable<{}> {
 
     let headers = new HttpHeaders({
       'Content-Type':  'application/json'
@@ -82,7 +83,7 @@ export class LocationTrackerProvider {
     return this.http.post<Position>(this.postPositionURL, pos, options)
       .pipe(
         retry(2),
-        catchError(this.handleError)
+        catchError(err => this.handleError(err))
       );
   }
 
@@ -106,9 +107,8 @@ export class LocationTrackerProvider {
 
         // return an observable with a user-facing error message
         console.log('Something bad happened; please try again later.');
-        // TODO Throw error
-        //return throwError('Something bad happened; please try again later.');
     }
+    return ErrorObservable.create('Something bad happened; please try again later.');
 
   };
 
