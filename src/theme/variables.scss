@@ -22,7 +22,17 @@ $app-direction: ltr;
 // To view all the possible Ionic variables, see:
 // http://ionicframework.com/docs/theming/overriding-ionic-variables/
 
-
+@font-face {
+  font-family: 'Gilroy-Regular';
+  src: url('/css/webfont/Gilroy-Regular.woff') format('woff'),
+    url('/css/webfont/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+$font-family-base: "Gilroy-Regular";
+$font-family-ios-base: $font-family-base;
+$font-family-md-base: $font-family-base;
+$font-family-wp-base: $font-family-base;
 
 
 // Named Color Variables
