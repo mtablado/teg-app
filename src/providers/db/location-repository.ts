@@ -26,13 +26,15 @@ export class LocationRepository {
   deleteAll() {
     console.log('Cleaning previous registered locations');
     this.db.executeSql('DELETE FROM location', {})
-      .then(response => console.log('location data deleted:' + response));
+      .then(response => console.log('location data deleted:' + response))
+      .catch(e => {console.log('Error: ' + JSON.stringify(e))});
   }
 
   selectAll() {
     console.log('Selecting all registered locations');
     this.db.executeSql('SELECT * FROM location', {})
-      .then(response => this.convertLocation(response));
+      .then(response => this.convertLocation(response))
+      .catch(e => {console.log('Error: ' + JSON.stringify(e))});
   }
 
 }

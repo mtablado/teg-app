@@ -29,7 +29,7 @@ export class DatabaseService {
 
   private createLocationTable(db: SQLiteObject) {
     console.log('Creating location table.');
-    db.executeSql('CREATE TABLE IF NOT EXISTS location(rowid INTEGER PRIMARY KEY, user TEXT, latitude TEXT, longitude TEXT)', {})
+    db.executeSql('CREATE TABLE IF NOT EXISTS location(rowid INTEGER PRIMARY KEY, user TEXT, latitude TEXT, longitude TEXT)', []])
       .then(res => {
         console.log('Creating location table success.');
         console.log(res);
@@ -41,7 +41,7 @@ export class DatabaseService {
 
   private createOAuth(db: SQLiteObject) {
     console.log('Creating table oauth.');
-    db.executeSql('CREATE TABLE IF NOT EXISTS oauth(username TEXT PRIMARY KEY, access_token TEXT, refresh_token TEXT)', {})
+    db.executeSql('CREATE TABLE IF NOT EXISTS oauth(username TEXT PRIMARY KEY, access_token TEXT, refresh_token TEXT)', [])
       .then(res => {
         console.log('Creating oauth table success.');
         console.log(res);
@@ -55,7 +55,7 @@ export class DatabaseService {
 
   private createUser(db: SQLiteObject) {
     console.log('Creating table user.');
-    db.executeSql('CREATE TABLE IF NOT EXISTS user(rowid INTEGER PRIMARY KEY, username TEXT, name TEXT, lastname TEXT)', {})
+    db.executeSql('CREATE TABLE IF NOT EXISTS user(rowid INTEGER PRIMARY KEY, username TEXT, name TEXT, lastname TEXT)', [])
       .then(res => {
         console.log('Creating user table success.');
         console.log(res);

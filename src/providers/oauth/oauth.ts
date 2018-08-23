@@ -106,6 +106,7 @@ export class OAuthProvider {
           err => {
             this.handleError(err);
             // TODO reject(err) when required.
+            reject(err);
           },
           () => resolve()
         );
@@ -125,7 +126,7 @@ export class OAuthProvider {
         .set('refresh_token', this.oauthToken.refresh_token)
         .set('client_id', 'ElGarabatoApp')
         .set('username', username);
-      console.log("Sending params:" + {body});
+      console.log("Sending params:" + JSON.stringify(body));
 
       this.http.post(this.url, body, this.httpLoginOptions)
         .subscribe(

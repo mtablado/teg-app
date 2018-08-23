@@ -36,6 +36,7 @@ page-welcome {
 
   .text-row {
       height: 25%;
+      width: 100%;
   }
 
   .button-row {
@@ -62,8 +63,13 @@ page-welcome {
     padding: 30px;
     text-transform: uppercase;
     box-shadow: none;
-    color: #22d6b8;
+    font-weight: bold;
     width: 100%;
     font-size: 20px;
+  }
+
+  .login-helper {
+    text-transform: uppercase;
+    text-align: center;
   }
 }

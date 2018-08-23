@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
+import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SecurityContext } from '../providers/oauth/security-context';
 import { User } from '../providers/db/user-entity';
@@ -15,6 +16,7 @@ export class MyApp {
 
   rootPage:any = WelcomePage;
   homePage = HomePage;
+  loginPage = LoginPage;
   welcomePage = WelcomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
@@ -43,4 +45,5 @@ export class MyApp {
   openPage(p) {
     this.rootPage = p;
   }
+
 }

@@ -27,13 +27,17 @@ export class SecurityContext {
   }
 
   public login(username, password) {
+    this.loggedIn = false;
     var promise = new Promise((resolve, reject) => {
       this.oauthProvider.login(username, password)
         .then(() => {
           console.log('login success');
+          this.loggedIn = true;
           this.setCurrentUser(username)
             .then(user => resolve(user))
-        });
+            .catch(e => {console.log('Error: ' + JSON.stringify(e))})
+        })
+        .catch(e => {console.log('Error: ' + JSON.stringify(e))});
       });
     return promise;
   }
@@ -103,9 +107,6 @@ export class SecurityContext {
 
     });
     return simpleObservable;
-    /*this.setCurrentUser(this.oauthProvider.getRegisteredUser())
-      .then((user: User) => {return user})
-      .catch(e => {return new User()});*/
   }
 
   private requestUser(username: string): Observable<User> {

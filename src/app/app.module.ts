@@ -3,7 +3,6 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Geolocation } from '@ionic-native/geolocation';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { SQLite } from '@ionic-native/sqlite';
 import { HttpClientModule } from '@angular/common/http';
@@ -50,7 +49,6 @@ import { SecurityContext } from '../providers/oauth/security-context';
     StatusBar,
     SplashScreen,
     BackgroundGeolocation,
-    Geolocation,
     httpInterceptorProviders,
     HttpClientModule,
     SQLite,

@@ -27,7 +27,7 @@ export class LoginPage {
       .then((user: User) => {
         console.log('user logged in: ' + user.name);
         this.navCtrl.setRoot(HomePage);
-      });
+      }).catch(e => {console.log('Error: ' + JSON.stringify(e))});
   }
 
 }
