@@ -29,7 +29,7 @@ export class DatabaseService {
 
   private createLocationTable(db: SQLiteObject) {
     console.log('Creating location table.');
-    db.executeSql('CREATE TABLE IF NOT EXISTS location(rowid INTEGER PRIMARY KEY, user TEXT, latitude TEXT, longitude TEXT)', []])
+    db.executeSql('CREATE TABLE IF NOT EXISTS location(rowid INTEGER PRIMARY KEY, user TEXT, latitude TEXT, longitude TEXT)', [])
       .then(res => {
         console.log('Creating location table success.');
         console.log(res);
