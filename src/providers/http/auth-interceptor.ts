@@ -42,6 +42,7 @@ export class AuthInterceptor implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             if (error.status === AUTH_ERROR) {
               console.log('AuthInterceptor refresh token attempt.');
+              this.oauthProvider.refreshToken();
             }
           }
         });
