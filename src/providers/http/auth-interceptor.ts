@@ -19,7 +19,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
     console.log('AuthInterceptor Intercepting ' + req.url );
     const AUTH_ERROR: number = 401;
-    let errorCode: number = 0;
 
     if (!req.url.endsWith('/oauth/token')) {
 
@@ -46,26 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
             }
           }
         });
-/*          map(
-            event => {
-              if (event instanceof HttpResponse) {
-                console.log('AuthInterceptor event detail: ' + JSON.stringify(event));
-                erroCode = 0;
-              }
-            },
-            // Operation failed; error is an HttpErrorResponse
-            error => {
-              console.log('AuthInterceptor error detail: ' + JSON.stringify(error));
-              errorCode = error.status;
-            }
-          ),
-          // Log when response observable either completes or errors
-          finalize(() => {
-            console.log('AuthInterceptor finalize with error code=' + errorCode);
-            if (errorCode === AUTH_ERROR) {
-              console.log('AuthInterceptor refresh token attempt.');
-            }
-          })*/
+
     } else {
       console.log('AuthInterceptor skipping url');
       return next.handle(req);
