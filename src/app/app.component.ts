@@ -8,6 +8,7 @@ import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { SecurityContext } from '../providers/oauth/security-context';
 import { User } from '../providers/db/user-entity';
+import { ENV } from "../env/env";
 
 @Component({
   templateUrl: 'app.html'
@@ -26,6 +27,8 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
 
       statusBar.styleDefault();
+
+      console.log(` ENV mode: ${ENV.mode} `);
 
       // Show the welcome page if the user cannot be restored from database.
       this.securityContext.getUser()

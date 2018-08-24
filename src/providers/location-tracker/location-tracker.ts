@@ -7,6 +7,7 @@ import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import { catchError, retry } from 'rxjs/operators';
 
 import { LocationRepository } from '../db/location-repository';
+import { ENV } from "../../env/env";
 
 export interface Position {
   longitude: number;
@@ -16,7 +17,7 @@ export interface Position {
 @Injectable()
 export class LocationTrackerProvider {
 
-  private postPositionURL = "http://192.168.1.45:8080/private/api/v1/position";
+  private postPositionURL = ENV.server_api + "/position";
 
   public watch: any;
   public lat: number = 0;

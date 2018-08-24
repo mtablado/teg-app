@@ -6,11 +6,13 @@ import { retry } from 'rxjs/operators';
 import { UserRepository } from '../db/user-repository';
 import { User } from '../db/user-entity';
 import { OAuthProvider, OAuthToken } from './oauth';
+import { ENV } from "../../env/env";
 
 @Injectable()
 export class SecurityContext {
 
-  private getUserURL = "http://192.168.1.45:8080/private/api/v1/users/username/";
+  private getUserURL = ENV.server_api + "/users/username/";
+  private url =  + "/oauth/token";
 
   // Controls if user is logged in or not.
   private loggedIn: boolean = false;

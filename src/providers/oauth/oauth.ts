@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { OAuthRepository } from '../db/oauth-repository';
 import { OAuthEntity } from '../db/oauth-entity';
+import { ENV } from "../../env/env";
 
 export class OAuthToken {
   public id;
@@ -34,7 +35,8 @@ export class OAuthToken {
 @Injectable()
 export class OAuthProvider {
 
-  private url = "http://192.168.1.45:8080/oauth/token";
+  private url = ENV.server_url + "/oauth/token";
+
   private httpLoginOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'application/x-www-form-urlencoded',
