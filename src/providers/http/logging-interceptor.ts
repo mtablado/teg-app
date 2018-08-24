@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor, HttpHandler, HttpRequest, HttpResponse
+  HttpInterceptor, HttpHandler, HttpRequest, HttpResponse, HttpEvent
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
@@ -10,26 +10,31 @@ import { finalize, tap } from 'rxjs/operators';
 export class LoggingInterceptor implements HttpInterceptor {
   constructor(/*private messenger: MessageService*/) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const started = Date.now();
-    let ok: string;
+    let msg: string;
 
     // extend server response observable with logging
     return next.handle(req)
       .pipe(
         tap(
           // Succeeds when there is a response; ignore other events
-          event => ok = event instanceof HttpResponse ? 'succeeded' : '',
+          event => {
+            msg = event instanceof HttpResponse ? 'succeeded' : '';
+          },
           // Operation failed; error is an HttpErrorResponse
-          error => ok = `failed (error code: ${error.status}, body was: ${error.error})`
+          error => {
+            msg = `failed (error code: ${error.status}, body was: ${JSON.stringify(error.error)})`
+          }
         ),
         // Log when response observable either completes or errors
         finalize(() => {
           const elapsed = Date.now() - started;
-          const msg = `${req.method} "${req.urlWithParams}"
-             ${ok} in ${elapsed} ms.`;
+          const logMsg = `${req.method} "${req.urlWithParams}"
+             ${msg} in ${elapsed} ms.`;
+
           //this.messenger.add(msg);
-          console.log(msg);
+          console.log(logMsg);
         })
       );
   }

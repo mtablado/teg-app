@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpInterceptor, HttpHandler, HttpRequest
+  HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpErrorResponse
 } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
+//import { finalize, map } from 'rxjs/operators';
 
 import { OAuthProvider } from '../oauth/oauth';
 
@@ -13,9 +15,12 @@ export class AuthInterceptor implements HttpInterceptor {
     // Nothing at this time.
   }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     console.log('AuthInterceptor Intercepting ' + req.url );
+    const AUTH_ERROR: number = 401;
+    let errorCode: number = 0;
+
     if (!req.url.endsWith('/oauth/token')) {
 
       // Get the auth token from the service.
@@ -29,12 +34,42 @@ export class AuthInterceptor implements HttpInterceptor {
       });
 
       // send cloned request with header to the next handler.
-      return next.handle(authReq);
+      return next.handle(authReq)
+        .do(() => {
+          // success
+        }, (error: any) => {
+          console.log('AuthInterceptor error detail: ' + JSON.stringify(error));
+          if (error instanceof HttpErrorResponse) {
+            if (error.status === AUTH_ERROR) {
+              console.log('AuthInterceptor refresh token attempt.');
+            }
+          }
+        });
+/*          map(
+            event => {
+              if (event instanceof HttpResponse) {
+                console.log('AuthInterceptor event detail: ' + JSON.stringify(event));
+                erroCode = 0;
+              }
+            },
+            // Operation failed; error is an HttpErrorResponse
+            error => {
+              console.log('AuthInterceptor error detail: ' + JSON.stringify(error));
+              errorCode = error.status;
+            }
+          ),
+          // Log when response observable either completes or errors
+          finalize(() => {
+            console.log('AuthInterceptor finalize with error code=' + errorCode);
+            if (errorCode === AUTH_ERROR) {
+              console.log('AuthInterceptor refresh token attempt.');
+            }
+          })*/
     } else {
       console.log('AuthInterceptor skipping url');
       return next.handle(req);
     }
 
-
   }
+
 }
