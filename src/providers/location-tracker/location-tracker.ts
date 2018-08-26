@@ -3,8 +3,7 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import 'rxjs/add/operator/filter';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
-import { catchError, retry } from 'rxjs/operators';
+import { retry } from 'rxjs/operators';
 
 import { LocationRepository } from '../db/location-repository';
 import { ENV } from "../../env/env";
@@ -36,6 +35,8 @@ export class LocationTrackerProvider {
   startTracking() {
     // Background Tracking
 
+    // TODO load specific environment configuration
+    
     let config = {
       desiredAccuracy: 0,
       stationaryRadius: 20,
@@ -59,11 +60,13 @@ export class LocationTrackerProvider {
         'latitude': this.lat,
         'longitude': this.lng
       };
-      this.postPosition(pos).subscribe();
+      this.postPosition(pos).subscribe(
+        () => {console.log('Position successfully sent')},
+        (err) => {this.handleError(err)}
+      );
+
     }, (err) => {
-
       console.log('Error at background geolocation process:' + err);
-
     });
 
     // Turn ON the background-geolocation system.
@@ -83,8 +86,7 @@ export class LocationTrackerProvider {
 
     return this.http.post<Position>(this.postPositionURL, pos, options)
       .pipe(
-        retry(2),
-        catchError(err => this.handleError(err))
+        retry(1)
       );
   }
 
@@ -110,7 +112,7 @@ export class LocationTrackerProvider {
         // return an observable with a user-facing error message
         console.log('Something bad happened; please try again later.');
     }
-    return ErrorObservable.create('Something bad happened; please try again later.');
+    //return ErrorObservable.create('Something bad happened; please try again later.');
 
   };
 

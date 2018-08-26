@@ -123,6 +123,12 @@ export class OAuthProvider {
     console.log("refresh token attempt for user: " + username);
     var promise = new Promise((resolve, reject) => {
 
+      // If there is not enough information to refresh the token
+      // then we need to halt the process but avoiding errors.
+      if (this.assertRefreshToken()) {
+        resolve();
+      }
+
       let body = new HttpParams()
         .set('grant_type', 'refresh_token')
         .set('refresh_token', this.oauthToken.refresh_token)
@@ -153,6 +159,14 @@ export class OAuthProvider {
 
   }
 
+  private assertRefreshToken(): boolean {
+    console.log(`Assert refresh token: refresh_token=${this.oauthToken.refresh_token}`
+      + `, and this.registeredUser=${this.registeredUser}`);
+    let condition: boolean = ('refresh_token' in this.oauthToken)
+      && (typeof this.registeredUser != 'undefined');
+    return condition;
+  }
+
   private loginSuccess(username: string, data: OAuthToken) {
     // TODO show message.
     console.log("Data received from server: " + JSON.stringify(data));
@@ -171,8 +185,8 @@ export class OAuthProvider {
     entity.accessToken = data.access_token;
     entity.refreshToken = data.refresh_token;
     this.oauthRepository.save(entity)
-      .then(res => console.log('Token stored:' + res))
-      .catch(e => console.log('Error storing token:' + e));
+      .then(res => console.log('Token stored:' + JSON.stringify(res)))
+      .catch(e => console.log('Error storing token:' + JSON.stringify(e)));
   }
 
   private removeStaleTokens(username: string) {
