@@ -14,3 +14,29 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+/*.item-md {
+  background: linear-gradient(to bottom, #22D6B7 0%, #67de74 100%);
+}*/
+
+.content-md {
+  background: linear-gradient(to bottom, #22D6B7 0%, #67de74 100%);
+}
+
+.toolbar-background-md {
+  background: #22D6B7;
+}
+
+.toolbar-title-md {
+  color: white;
+  font-weight: 1000;
+  text-transform: uppercase;
+  font-size: 25px;
+}
+
+.menu-inner .item-md {
+  text-transform: uppercase;
+  color: #22d6b8;
+  width: 100%;
+  font-size: 20px;
+}
