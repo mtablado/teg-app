@@ -15,7 +15,7 @@ import { ENV } from "../env/env";
 })
 export class MyApp {
 
-  const EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
+  private EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
   @ViewChild('content') nav: NavController;
 
   rootPage:any = HomePage;

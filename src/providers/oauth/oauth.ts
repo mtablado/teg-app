@@ -39,7 +39,7 @@ export class OAuthToken {
 @Injectable()
 export class OAuthProvider {
 
-  const EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
+  private EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
 
   private url = ENV.server_url + "/oauth/token";
 
@@ -130,38 +130,42 @@ export class OAuthProvider {
     console.log("refresh token attempt for user: " + username);
     var promise = new Promise((resolve, reject) => {
 
-      // If there is not enough information to refresh the token
-      // then we need to halt the process but avoiding errors.
-      if (this.assertRefreshToken()) {
+      if (!this.assertRefreshToken()) {
+
+        // If there is not enough information to refresh the token
+        // then we need to halt the process but avoiding errors.
+        console.log('skipping refresh token, not valid data.')
+        this.events.publish(this.EXPIRATION_TOPIC);
         resolve();
-      }
-      
-      let body = new HttpParams()
-        .set('grant_type', 'refresh_token')
-        .set('refresh_token', this.oauthToken.refresh_token)
-        .set('client_id', 'ElGarabatoApp')
-        .set('username', username);
-      console.log("Sending params:" + JSON.stringify(body));
 
-      this.http.post(this.url, body, this.httpLoginOptions)
-        .subscribe(
-          (data: OAuthToken) => {
-            this.loginSuccess(username, data);
-            resolve();
-          },
-          err => {
-            // When refreshing a token as a fallback method,
-            // errors are not raised anymore to avoid infite loops.
-            // TODO Raise not logged in event.
-            console.error(
-              `REFRESH TOKEN: Backend returned code ${err.status}, ` +
-              `body was: ${err.error}`);
-            this.events.publish(this.EXPIRATION_TOPIC);
-            resolve();
-          },
-          () => resolve()
-        );
+      } else {
 
+        let body = new HttpParams()
+          .set('grant_type', 'refresh_token')
+          .set('refresh_token', this.oauthToken.refresh_token)
+          .set('client_id', 'ElGarabatoApp')
+          .set('username', username);
+        console.log("Sending params:" + JSON.stringify(body));
+
+        this.http.post(this.url, body, this.httpLoginOptions)
+          .subscribe(
+            (data: OAuthToken) => {
+              this.loginSuccess(username, data);
+              resolve();
+            },
+            err => {
+              // When refreshing a token as a fallback method,
+              // errors are not raised anymore to avoid infite loops.
+              // TODO Raise not logged in event.
+              console.error(
+                `REFRESH TOKEN: Backend returned code ${err.status}, ` +
+                `body was: ${err.error}`);
+              this.events.publish(this.EXPIRATION_TOPIC);
+              resolve();
+            },
+            () => resolve()
+          );
+        }
     });
     return promise;
 
@@ -171,7 +175,9 @@ export class OAuthProvider {
     console.log(`Assert refresh token: refresh_token=${this.oauthToken.refresh_token}`
       + `, and this.registeredUser=${this.registeredUser}`);
     let condition: boolean = ('refresh_token' in this.oauthToken)
-      && (typeof this.registeredUser != 'undefined');
+      && (this.registeredUser != null);
+    //condition = ('refresh_token' in this.oauthToken)? true : false;
+    console.log(`Assert refresh token result: ${condition}`);
     return condition;
   }
 

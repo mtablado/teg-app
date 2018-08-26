@@ -123,7 +123,7 @@ export class SecurityContext {
     let url = this.getUserURL + username;
     return this.http.get<User>(url, options)
       .pipe(
-        retry(2)
+        retry(1)
       );
   }
 
