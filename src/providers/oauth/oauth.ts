@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
+import { Events } from 'ionic-angular';
+
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { OAuthRepository } from '../db/oauth-repository';
 import { OAuthEntity } from '../db/oauth-entity';
 import { ENV } from "../../env/env";
+import { LoginPage } from '../../pages/login/login';
+
 
 export class OAuthToken {
   public id;
@@ -35,6 +39,8 @@ export class OAuthToken {
 @Injectable()
 export class OAuthProvider {
 
+  const EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
+
   private url = ENV.server_url + "/oauth/token";
 
   private httpLoginOptions = {
@@ -49,7 +55,8 @@ export class OAuthProvider {
   private registeredUser: string;
 
   constructor(
-      private http: HttpClient
+      public events: Events
+      , private http: HttpClient
       , private oauthRepository: OAuthRepository) {
     console.log('Hello OauthProvider Provider');
     this.registeredUser = null;
@@ -123,12 +130,6 @@ export class OAuthProvider {
     console.log("refresh token attempt for user: " + username);
     var promise = new Promise((resolve, reject) => {
 
-      // If there is not enough information to refresh the token
-      // then we need to halt the process but avoiding errors.
-      if (this.assertRefreshToken()) {
-        resolve();
-      }
-
       let body = new HttpParams()
         .set('grant_type', 'refresh_token')
         .set('refresh_token', this.oauthToken.refresh_token)
@@ -149,6 +150,7 @@ export class OAuthProvider {
             console.error(
               `REFRESH TOKEN: Backend returned code ${err.status}, ` +
               `body was: ${err.error}`);
+            this.events.publish(this.EXPIRATION_TOPIC);
             resolve();
           },
           () => resolve()
@@ -157,14 +159,6 @@ export class OAuthProvider {
     });
     return promise;
 
-  }
-
-  private assertRefreshToken(): boolean {
-    console.log(`Assert refresh token: refresh_token=${this.oauthToken.refresh_token}`
-      + `, and this.registeredUser=${this.registeredUser}`);
-    let condition: boolean = ('refresh_token' in this.oauthToken)
-      && (typeof this.registeredUser != 'undefined');
-    return condition;
   }
 
   private loginSuccess(username: string, data: OAuthToken) {
@@ -185,8 +179,8 @@ export class OAuthProvider {
     entity.accessToken = data.access_token;
     entity.refreshToken = data.refresh_token;
     this.oauthRepository.save(entity)
-      .then(res => console.log('Token stored:' + JSON.stringify(res)))
-      .catch(e => console.log('Error storing token:' + JSON.stringify(e)));
+      .then(res => console.log('Token stored:' + res))
+      .catch(e => console.log('Error storing token:' + e));
   }
 
   private removeStaleTokens(username: string) {

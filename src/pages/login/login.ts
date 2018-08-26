@@ -19,6 +19,7 @@ export class LoginPage {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+
   }
 
   logForm(){
