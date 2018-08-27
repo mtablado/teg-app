@@ -1,0 +1,45 @@
+<ion-content padding>
+  <ion-grid>
+    <ion-row class="logo-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+        <img src="/assets/imgs/home/logo.png"/>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="picture-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+        <img class="profile-picture" src="/assets/imgs/profile-icon.png"/>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="user-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+        <h3>{{user.name}} {{user.lastname}}</h3>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="button-row">
+      <ion-col>
+      </ion-col>
+      <ion-col col-8>
+          <button ion-button type="submit" (click)="logout()">Cerrar Sesión</button>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 
 import { HttpClient, HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 import { OAuthRepository } from '../db/oauth-repository';
 import { OAuthEntity } from '../db/oauth-entity';
 import { ENV } from "../../env/env";
-import { LoginPage } from '../../pages/login/login';
-
 
 export class OAuthToken {
   public id;
@@ -93,6 +93,17 @@ export class OAuthProvider {
 
   public isUserRegistered() {
     return (this.registeredUser != null);
+  }
+
+  public logout(): Observable<void> {
+    console.log('Logout request, removing oauth data');
+    const simpleObservable = new Observable<void>((observer) => {
+      this.removeStaleTokens();
+      this.registeredUser = null;
+      this.oauthToken = new OAuthToken();
+      observer.complete();
+    });
+    return simpleObservable;
   }
 
   public login(username, password) {
@@ -188,7 +199,7 @@ export class OAuthProvider {
 
     this.oauthToken = data;
 
-    this.removeStaleTokens(username);
+    this.removeStaleTokens();
     this.storeToken(username, this.oauthToken);
   }
 
@@ -203,7 +214,7 @@ export class OAuthProvider {
       .catch(e => console.log('Error storing token:' + e));
   }
 
-  private removeStaleTokens(username: string) {
+  private removeStaleTokens() {
     console.log('Removing old token information');
     this.oauthRepository.deleteStaleTokens()
       .then(res => console.log('Old token deleted:' + res))

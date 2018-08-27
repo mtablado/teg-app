@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { ProfilePage } from '../pages/profile/profile';
 
 import { httpInterceptorProviders } from '../providers/http/interceptors-index';
 import { LocationTrackerProvider } from '../providers/location-tracker/location-tracker';
@@ -29,7 +30,8 @@ import { SecurityContext } from '../providers/oauth/security-context';
     MyApp,
     HomePage,
     LoginPage,
-    WelcomePage
+    WelcomePage,
+    ProfilePage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +44,8 @@ import { SecurityContext } from '../providers/oauth/security-context';
     MyApp,
     HomePage,
     LoginPage,
-    WelcomePage
+    WelcomePage,
+    ProfilePage
   ],
   providers: [
     BackgroundMode,

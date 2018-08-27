@@ -6,10 +6,13 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <button menuClose ion-item (click)="openPage(homePage)">
+      <button *ngIf="securityContext.loggedIn" menuClose ion-item (click)="openPage(homePage)">
         Página Principal
       </button>
-      <button menuClose ion-item (click)="openPage(loginPage)">
+      <button *ngIf="securityContext.loggedIn" menuClose ion-item (click)="openPage(profilePage)">
+        Usuario
+      </button>
+      <button *ngIf="!securityContext.loggedIn" menuClose ion-item (click)="openPage(loginPage)">
         Iniciar Sesi&oacute;n
       </button>
     </ion-list>

@@ -12,10 +12,9 @@ import { ENV } from "../../env/env";
 export class SecurityContext {
 
   private getUserURL = ENV.server_api + "/users/username/";
-  private url =  + "/oauth/token";
 
   // Controls if user is logged in or not.
-  private loggedIn: boolean = false;
+  loggedIn: boolean = false;
   // The username of the registered user.
   private registeredUser: string;
 
@@ -44,8 +43,24 @@ export class SecurityContext {
     return promise;
   }
 
+  public logout(): Observable<void> {
+    const simpleObservable = new Observable<void>((observer) => {
+      this.loggedIn = false;
+      this.registeredUser = null;
+      this.oauthProvider.logout().subscribe(() => {
+        observer.next();
+      }, (error) => {
+        observer.error(error);
+      }, () => {
+        observer.complete();
+      });
+    });
+    return simpleObservable;
+  }
+
   public setCurrentUser(username: string) {
     this.registeredUser = username;
+    this.loggedIn = true;
     var promise = new Promise((resolve, reject) => {
       this.userRepository.findUserByUsername(username)
         .then((user: User) => {
@@ -67,7 +82,7 @@ export class SecurityContext {
           } else {
             this.requestUser(username).subscribe(
               (user: User) => {
-                // Store database user id since it is propietary of the mob app.
+                // Store database user id since it is property of the mob app.
                 let id = this.user.rowid;
                 this.user = user;
                 this.user.rowid = id

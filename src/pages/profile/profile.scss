@@ -1,0 +1,35 @@
+page-profile {
+
+
+  img.profile-picture {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    border: 3px;
+    border-color: white;
+    background-color: lightgrey;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .picture-row {
+    padding-top: 30px;
+  }
+
+  .user-row {
+    text-align: center;
+    padding-top: 20px;
+  }
+
+  .button-md {
+    background: url('/assets/imgs/login/login.png') no-repeat center;
+    background-size: 100%;
+    padding: 25px;
+    text-transform: uppercase;
+    box-shadow: none;
+    color: #22d6b8;
+    width: 100%;
+    font-size: 20px;
+  }
+
+}

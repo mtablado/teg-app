@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { ProfilePage } from '../pages/profile/profile';
+
 import { SecurityContext } from '../providers/oauth/security-context';
 import { User } from '../providers/db/user-entity';
 import { ENV } from "../env/env";
@@ -16,12 +18,14 @@ import { ENV } from "../env/env";
 export class MyApp {
 
   private EXPIRATION_TOPIC: string = 'user:expired-refresh-token';
+  private CLOSED_SESSION_EVENT: string = 'user:closed-session';
   @ViewChild('content') nav: NavController;
 
   rootPage:any = HomePage;
   homePage = HomePage;
   loginPage = LoginPage;
   welcomePage = WelcomePage;
+  profilePage = ProfilePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen
       , private securityContext: SecurityContext, public events: Events, ) {
@@ -43,7 +47,7 @@ export class MyApp {
 
       splashScreen.hide();
 
-      this.handleExpiration();
+      this.registerListeners();
 
     });
   }
@@ -52,10 +56,15 @@ export class MyApp {
     this.rootPage = p;
   }
 
-  handleExpiration() {
-    console.log('App subscribing to ' + this.EXPIRATION_TOPIC);
-    this.events.subscribe(this.EXPIRATION_TOPIC, () => {
-      console.log('Handling expired tokens');
+  private registerListeners() {
+    this.processEvents(this.EXPIRATION_TOPIC);
+    this.processEvents(this.CLOSED_SESSION_EVENT);
+  }
+
+  private processEvents(topic: string) {
+    console.log('App subscribing to ' + topic);
+    this.events.subscribe(topic, () => {
+      console.log(topic + 'event received.');
       this.nav.push(LoginPage);
     });
   }
