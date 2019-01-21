@@ -51,7 +51,7 @@ export class LoginPage {
   }
 
   serverErrorToast() {
-    this.presentToast('Ooops! Algo no ha ido bien. Por favor, contacta el administrador del sistema.');
+    this.presentToast('Ooops! Algo no ha ido bien. <br/>Por favor, contacta el administrador del sistema.');
   }
 
   presentToast(message: string) {
