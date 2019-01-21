@@ -1,8 +1,8 @@
 {
-  "name": "test",
+  "name": "ElGarabatoApp",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "author": "ElGarabatoTTES",
+  "homepage": "",
   "private": true,
   "scripts": {
     "start": "ionic-app-scripts serve",
@@ -52,7 +52,7 @@
     "@ionic/app-scripts": "3.1.11",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project",
+  "description": "Aplicación para el seguimiento de flota de ElGarabatoTTES",
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},

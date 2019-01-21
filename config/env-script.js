@@ -1,7 +1,7 @@
 var fs = require('fs');
 
 function readWriteSync() {
-  let env = process.env.ENV || 'dev';
+  let env = process.env.IONIC_ENV || 'dev';
 
   var data = fs.readFileSync(`src/env/env.${env}.ts`, 'utf-8');
   fs.writeFileSync('src/env/env.ts', data, 'utf-8');
@@ -10,7 +10,7 @@ function readWriteSync() {
 }
 
 function consoleOut() {
-  let env = process.env.ENV || 'dev';
+  let env = process.env.IONIC_ENV || 'dev';
   let filePath = `src/env/env.${env}.ts`;
 
   console.log("============ PREPARE ENV FILE =============");
