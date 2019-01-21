@@ -38,7 +38,7 @@ export class SecurityContext {
             .then(user => resolve(user))
             .catch(e => {console.log('Error: ' + JSON.stringify(e))})
         })
-        .catch(e => {console.log('Error: ' + JSON.stringify(e))});
+        .catch(e => {reject(e)});
       });
     return promise;
   }
