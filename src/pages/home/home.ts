@@ -42,6 +42,9 @@ export class HomePage {
       .subscribe((user: User) => {
         this.user = user;
         this.shareLocation = user.shareLocation;
+        if (this.shareLocation) {
+          this.start();
+        }
       });
   }
 
