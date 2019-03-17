@@ -81,7 +81,8 @@ export class OAuthProvider {
         .catch(e => {
           console.log('Error while finding token in promise:' + JSON.stringify(e));
           this.oauthToken = new OAuthToken();
-          resolve(this.oauthToken);
+          //resolve(this.oauthToken);
+          reject('Token not present');
         })
       });
       return promise;

@@ -113,7 +113,6 @@ export class SecurityContext {
         observer.next(this.user);
         observer.complete();
       } else {
-        observer.next(new User());
         this.oauthProvider.findToken()
           .then((oauthToken: OAuthToken) => {
             console.log(`User ${this.oauthProvider.getRegisteredUser()} still not loaded`);
@@ -123,7 +122,11 @@ export class SecurityContext {
                 observer.complete();
               })
               .catch(e => {console.log('Error: ' + JSON.stringify(e))});
-          }).catch(e => {console.log('Error: ' + JSON.stringify(e))});
+          }).catch(e => {
+            console.log('Error: ' + JSON.stringify(e));
+            observer.next(null);
+            observer.complete();
+          });
       }
 
     });

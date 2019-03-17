@@ -40,7 +40,8 @@ export class MyApp {
       // Show the welcome page if the user cannot be restored from database.
       this.securityContext.getUser()
         .subscribe((user: User) => {
-          if (user.name == 'undefined') {
+          console.log(`User: ${user}`);
+          if (null == user) {
             this.nav.push(this.welcomePage);
           }
         });
