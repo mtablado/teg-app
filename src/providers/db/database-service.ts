@@ -55,7 +55,7 @@ export class DatabaseService {
 
   private createUser(db: SQLiteObject) {
     console.log('Creating table user.');
-    db.executeSql('CREATE TABLE IF NOT EXISTS user(rowid INTEGER PRIMARY KEY, username TEXT, name TEXT, lastname TEXT)', [])
+    db.executeSql('CREATE TABLE IF NOT EXISTS user(rowid INTEGER PRIMARY KEY, username TEXT, name TEXT, lastname TEXT, share_location INTEGER)', [])
       .then(res => {
         console.log('Creating user table success.');
         console.log(res);

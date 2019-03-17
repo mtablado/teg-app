@@ -10,7 +10,7 @@ function readWriteSync() {
 }
 
 function consoleOut() {
-  let env = process.env.IONIC_ENV || 'dev';
+  let env = process.env.IONIC_ENV || 'prod';
   let filePath = `src/env/env.${env}.ts`;
 
   console.log("============ PREPARE ENV FILE =============");

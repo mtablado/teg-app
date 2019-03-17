@@ -15,8 +15,6 @@ export class SecurityContext {
 
   // Controls if user is logged in or not.
   loggedIn: boolean = false;
-  // The username of the registered user.
-  private registeredUser: string;
 
   private user: User;
 
@@ -46,7 +44,6 @@ export class SecurityContext {
   public logout(): Observable<void> {
     const simpleObservable = new Observable<void>((observer) => {
       this.loggedIn = false;
-      this.registeredUser = null;
       this.oauthProvider.logout().subscribe(() => {
         observer.next();
       }, (error) => {
@@ -59,11 +56,10 @@ export class SecurityContext {
   }
 
   public setCurrentUser(username: string) {
-    this.registeredUser = username;
     this.loggedIn = true;
     var promise = new Promise((resolve, reject) => {
       this.userRepository.findUserByUsername(username)
-        .then((user: User) => {
+        .subscribe((user: User) => {
           this.user = user;
 
           console.log('Is user valid: ' + (null != this.user));
@@ -73,7 +69,12 @@ export class SecurityContext {
 
             this.requestUser(username).subscribe(
               (user: User) => {
-                this.userRepository.save(user);
+                // Initialize preference.
+                user.shareLocation = false;
+                this.userRepository.save(user).subscribe(
+                  (user: User) => {
+                    this.user = user;
+                  });
                 this.user = user;
                 resolve(this.user);
               },
@@ -84,16 +85,19 @@ export class SecurityContext {
               (user: User) => {
                 // Store database user id since it is property of the mob app.
                 let id = this.user.rowid;
+                // shareLocation property is only used at mobile app.
+                let shareLocation = this.user.shareLocation;
                 this.user = user;
                 this.user.rowid = id
+                this.user.shareLocation = shareLocation;
                 this.userRepository.save(this.user);
-
               },
               (error) => console.log(`error while fetching user: ${error.status}`)
             )
             resolve(this.user);
           }
-        }).catch(e => reject(e)); // TODO handle error.
+        })
+        ,(e) => reject(e); // TODO handle error.
       });
     return promise;
   }
@@ -124,6 +128,12 @@ export class SecurityContext {
 
     });
     return simpleObservable;
+  }
+
+  public updateShareLocation(shareLocation: boolean) {
+    this.user.shareLocation = shareLocation;
+    this.userRepository.save(this.user).subscribe();
+    // TODO update backend.
   }
 
   private requestUser(username: string): Observable<User> {

@@ -34,8 +34,8 @@ function consoleOut(env) {
 
 module.exports = function () {
 
-  var env = process.env.IONIC_ENV || 'dev';
-
+  //var env = process.env.IONIC_ENV || 'prod';
+  var env = 'prod';
   consoleOut(env);
   return useDefaultConfig;
 };

@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.elgarabato.teg" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.elgarabato.teg" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>ElGarabatoApp</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+    <description>Aplicación empresarial para el seguimiento de flotas</description>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -11,6 +10,7 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <preference name="KeyboardResizeMode" value="native" />
     <preference name="ScrollEnabled" value="false" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="BackupWebStorage" value="none" />
@@ -80,7 +80,6 @@
     <plugin name="cordova-plugin-device" spec="2.0.2" />
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
-    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.3.5">
         <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
         <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
@@ -96,5 +95,6 @@
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
     <allow-navigation href="http://9.137.161.67:8100" sessionid="a7052d7a" />
     <allow-navigation href="http://192.168.1.45:8100" sessionid="cd5353a1" />
+    <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.2" />
     <engine name="android" spec="7.0.0" />
 </widget>

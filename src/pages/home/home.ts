@@ -31,12 +31,18 @@ export class HomePage {
     // Override the back button on Android to go to background instead of closing the app.
     this.backgroundMode.overrideBackButton();
     this.backgroundMode.enable();
+
+    // Load user
+    this.getUser();
   }
 
   public getUser() {
     console.log('Loading user for home page');
     this.securityContext.getUser()
-      .subscribe((user: User) => {this.user = user});
+      .subscribe((user: User) => {
+        this.user = user;
+        this.shareLocation = user.shareLocation;
+      });
   }
 
   public isUserRegistered() {
@@ -65,6 +71,7 @@ export class HomePage {
     } else {
       this.stop();
     }
+    this.securityContext.updateShareLocation(this.shareLocation);
   }
 
   start() {
